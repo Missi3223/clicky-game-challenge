@@ -1,27 +1,121 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import matchcards from './matchcards.json';
+import Title from './Components/Title';
+// import jumbotron from './Components/Jumbotron';
+import MatchCard from './Components/CodeCard';
+import Wrapper from './Components/Wrapper';
 import './App.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+let correctGuesses = 0;
+let topScore = 0;
+let clickMessage = "Click on each image to gain points. BUT, do not click on the same image more than once";
+
+class App extends Component{
+
+  state= {
+    matchcards,
+    correctGuesses,
+    topScore,
+    clickMessage
+    // clickedImage:[],
+    // score: 0
+  };
+
+  setClicked = id => {
+      // create an array of matchcards ID
+    const matchcards = this.state.matchcards;
+    const clickedMatch = matchcards.filter(match => match.id === id);
+    // Set this.state.matchcards equal to the new matchcards array
+    if (clickedMatch[0].clicked){
+      //  local test before deploy
+      console.log("Correct Guesses: " + correctGuesses);
+      console.log("Top Score: " + topScore);
+
+      correctGuesses=0;
+      clickMessage = "That image has already been selected.  Start Over!"
+
+      for (let i = 0; i < matchcards.length; i++){
+        matchcards[i].clicked = false;
+      }
+
+      this.setState({clickMessage});
+      this.setState({ correctGuesses});
+      this.setState({ matchcards});
+
+      // otherwise if clicked = false, and user has not finished
+    }else if (correctGuesses < 11){
+      // set value to TRUE
+      clickedMatch[0].clicked = true;
+      // increase counter
+      correctGuesses++;
+      // this clicked Message
+      clickMessage = "Keep Going!!";
+
+      if (correctGuesses > topScore){
+        topScore = correctGuesses;
+        this.setState({topScore});
+      }
+      // SHUFFLE Time
+      matchcards.sort(function(a, b){return 0.5 - Math.random()});
+
+      this.setState({matchcards});
+      this.setState({correctGuesses});
+      this.setState({clickMessage});
+    }else{
+
+      clickedMatch[0].clicked = true;
+
+      // restart the counter
+      correctGuesses = 0;
+
+      clickMessage = "GREAT JOB!!! But can you do it again?";
+      topScore = 12;
+      this.setState({topScore});
+
+      for (let i = 0; i < matchcards.length; i++){
+        matchcards[i].clicked = false;
+      }
+      // shuffle again.  See if we can reuse this function
+      matchcards.sort(function(a, b){return 0.5 - Math.random()});
+
+      this.setState({matchcards});
+      this.setState({correctGuesses});
+      this.setState({clickMessage});
+    }
+  };
+// RENDER
+
+  render(){
+
+    return(
+      <Wrapper>
+        <div className ="row">
+        <Title>Clicky Game with Code Images</Title>
+            <h3 className= "scoreSummary">
+        {this.state.clickMessage}
+        </h3>
+        </div>
+      <br />
+      <div className ="row">
+        <h3 className = "scoreSummary">
+        Correct Guesses: {this.state.correctGuesses}
+        <br /><br />
+        Top Score: {this.state.topScore}
+        </h3>
+        <br /><br />
+        </div>
+        <div className = "row">
+        {this.state.matchcards.map(match => (
+          <MatchCard
+         setClicked={this.setClicked}
+          id={match.id}
+          key={match.id}
+          image = {match.image}
+          />
+        ))}
+          </div>
+      </Wrapper>
+    )
   }
 }
 
