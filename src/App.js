@@ -1,119 +1,101 @@
-import React, { Component } from 'react';
-import matchcards from './matchcards.json';
-import ScoreBar from './Components/ScoreBar';
+import React from 'react';
+// import imageCards from './imageCards.json';
+// import ScoreBar from './Components/ScoreBar';
+import GameControl from './Components/GameControl';
 import Jumbotron from './Components/Jumbotron';
-import MatchCard from './Components/CodeCard';
+// import MatchCard from './Components/MatchCard';
 // import Wrapper from './Components/Wrapper';
 import './App.css';
 
 
-let correctGuesses = 0;
-let topScore = 0;
-let clickMessage = "";
+// let correctGuesses = 0;
+// let topScore = 0;
+// let clickMessage = "";
 
-class App extends Component{
+// class App extends Component{
 
-  state = {
-    matchcards,
-    correctGuesses,
-    topScore,
-    clickMessage
-  };
+//   state = {
+//     imageCards,
+//     correctGuesses,
+//     topScore,
+//     clickMessage
+//   };
 
-  setClicked = id => {
-      // create an array of matchcards ID
-    const matchcards = this.state.matchcards;
-    const clickedMatch = matchcards.filter(match => match.id === id);
-    // Set this.state.matchcards equal to the new matchcards array
-    if (clickedMatch[0].clicked){
-      //  local test before deploy
-      console.log("Correct Guesses: " + correctGuesses);
-      console.log("Top Score: " + topScore);
+//   setClicked = id => {
+//       // create an array of imageCards ID
+//     const imageCards = this.state.imageCards;
+//     const clickedMatch = imageCards.filter(match => match.id === id);
+//     // Set this.state.imageCards equal to the new imageCards array
+//     if (clickedMatch[0].clicked){
+//       //  local test before deploy
+//       console.log("Correct Guesses: " + correctGuesses);
+//       console.log("Top Score: " + topScore);
 
-      correctGuesses = 0;
-      clickMessage = "FAILURE!!"
+//       correctGuesses = 0;
+//       clickMessage = "FAILURE!!"
 
 
-      for (let i = 0; i < matchcards.length; i++){
-        matchcards[i].clicked = false;
-      }
+//       for (let i = 0; i < imageCards.length; i++){
+//         imageCards[i].clicked = false;
+//       }
 
-      this.setState({ clickMessage});
-      this.setState({ correctGuesses});
-      this.setState({ matchcards});
+//       this.setState({ clickMessage});
+//       this.setState({ correctGuesses});
+//       this.setState({ imageCards});
 
-      // otherwise if clicked = false, and user has not finished
-    }else if (correctGuesses < 11){
-      // set value to TRUE
-      clickedMatch[0].clicked = true;
-      // increase counter
-      correctGuesses++;
-      // this clicked Message
-      clickMessage = "Keep Going!!";
+//       // otherwise if clicked = false, and user has not finished
+//     }else if (correctGuesses < 11){
+//       // set value to TRUE
+//       clickedMatch[0].clicked = true;
+//       // increase counter
+//       correctGuesses++;
+//       // this clicked Message
+//       clickMessage = "Keep Going!!";
 
-      if (correctGuesses > topScore){
-        topScore = correctGuesses;
-        this.setState({topScore});
-      }
-      // SHUFFLE Time
-      matchcards.sort(function(a, b){return 0.5 - Math.random()});
+//       if (correctGuesses > topScore){
+//         topScore = correctGuesses;
+//         this.setState({topScore});
+//       }
+//       // SHUFFLE Time
+//       imageCards.sort(function(a, b){return 0.5 - Math.random()});
 
-      this.setState({matchcards});
-      this.setState({correctGuesses});
-      this.setState({clickMessage});
-    }else{
+//       this.setState({imageCards});
+//       this.setState({correctGuesses});
+//       this.setState({clickMessage});
+//     }else{
 
-      clickedMatch[0].clicked = true;
+//       clickedMatch[0].clicked = true;
 
-      // restart the counter
-      correctGuesses = 0;
+//       // restart the counter
+//       correctGuesses = 0;
 
-      clickMessage = "GREAT JOB!!! But can you do it again?";
-      topScore = 12;
-      this.setState({topScore});
+//       clickMessage = "GREAT JOB!!! But can you do it again?";
+//       topScore = 12;
+//       this.setState({topScore});
 
-      for (let i = 0; i < matchcards.length; i++){
-        matchcards[i].clicked = false;
-      }
-      // shuffle again.  See if we can reuse this function
-      matchcards.sort(function(a, b){return 0.5 - Math.random()});
+//       for (let i = 0; i < imageCards.length; i++){
+//         imageCards[i].clicked = false;
+//       }
+//       // shuffle again.  See if we can reuse this function
+//       imageCards.sort(function(a, b){return 0.5 - Math.random()});
 
-      this.setState({matchcards});
-      this.setState({correctGuesses});
-      this.setState({clickMessage});
-    }
-  };
+//       this.setState({imageCards});
+//       this.setState({correctGuesses});
+//       this.setState({clickMessage});
+//     }
+//   };
 // RENDER
 
-  render(){
-    return(
+const App = ()=> (
 
       <div className="container-fluid mainContainer">
       <Jumbotron />
-      <br /> <br />
-      <ScoreBar>
-        Correct Guesses = {this.state.correctGuesses}<br />
-        Top Score = {this.state.topScore}
-        </ScoreBar>
-        <div className = "row">
-        <h1>{this.state.clickMessage}</h1></div>
+      <GameControl />
 
-       <div className = "wrapper">
+      </div>
 
-        {this.state.matchcards.map(match => (
-          <MatchCard
-          setClicked={this.setClicked}
-          id={match.id}
-          key={match.id}
-          image = {match.image}
-      />
-        ))}
-        </div>
-        </div>
+);
 
 
-    )
-  }
-}
 
 export default App;
