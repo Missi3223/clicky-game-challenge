@@ -1,24 +1,23 @@
 import React, { Component } from 'react';
 import matchcards from './matchcards.json';
-import Title from './Components/Title';
-// import jumbotron from './Components/Jumbotron';
+import ScoreBar from './Components/ScoreBar';
+import Jumbotron from './Components/Jumbotron';
 import MatchCard from './Components/CodeCard';
 import Wrapper from './Components/Wrapper';
 import './App.css';
 
+
 let correctGuesses = 0;
 let topScore = 0;
-let clickMessage = "Click on each image to gain points. BUT, do not click on the same image more than once";
+let clickMessage = "Click any image to begin";
 
 class App extends Component{
 
-  state= {
+  state = {
     matchcards,
     correctGuesses,
     topScore,
     clickMessage
-    // clickedImage:[],
-    // score: 0
   };
 
   setClicked = id => {
@@ -31,14 +30,16 @@ class App extends Component{
       console.log("Correct Guesses: " + correctGuesses);
       console.log("Top Score: " + topScore);
 
-      correctGuesses=0;
-      clickMessage = "That image has already been selected.  Start Over!"
+      correctGuesses = 0;
+      clickMessage = "FAILURE!!"
+      correctGuesses = 1;
+      clickMessage = "Good Luck"
 
       for (let i = 0; i < matchcards.length; i++){
         matchcards[i].clicked = false;
       }
 
-      this.setState({clickMessage});
+      this.setState({ clickMessage});
       this.setState({ correctGuesses});
       this.setState({ matchcards});
 
@@ -90,24 +91,21 @@ class App extends Component{
     return(
       <Wrapper>
         <div className ="row">
-        <Title>Clicky Game with Code Images</Title>
-            <h3 className= "scoreSummary">
-        {this.state.clickMessage}
-        </h3>
+        <Jumbotron> Clicky Game with Code Images</Jumbotron>
         </div>
-      <br />
       <div className ="row">
-        <h3 className = "scoreSummary">
-        Correct Guesses: {this.state.correctGuesses}
-        <br /><br />
-        Top Score: {this.state.topScore}
-        </h3>
-        <br /><br />
-        </div>
+      <ScoreBar
+        correctGuesses= {this.state.correctGuesses}
+        topScore = {this.state.topScore}
+      />
+      </div>
+        <div className = "row">
+        <h1>{this.state.clickMessage}</h1></div>
         <div className = "row">
         {this.state.matchcards.map(match => (
           <MatchCard
-         setClicked={this.setClicked}
+          clickMessage =  {this.clickMessage}
+          setClicked={this.setClicked}
           id={match.id}
           key={match.id}
           image = {match.image}
