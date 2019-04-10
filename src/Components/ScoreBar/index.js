@@ -1,1 +1,1 @@
-export {default} from "./ScoreBar";
+export {default} from "./ScoreBar.js";

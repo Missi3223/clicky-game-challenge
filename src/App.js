@@ -3,13 +3,13 @@ import matchcards from './matchcards.json';
 import ScoreBar from './Components/ScoreBar';
 import Jumbotron from './Components/Jumbotron';
 import MatchCard from './Components/CodeCard';
-import Wrapper from './Components/Wrapper';
+// import Wrapper from './Components/Wrapper';
 import './App.css';
 
 
 let correctGuesses = 0;
 let topScore = 0;
-let clickMessage = "Click any image to begin";
+let clickMessage = "";
 
 class App extends Component{
 
@@ -32,8 +32,7 @@ class App extends Component{
 
       correctGuesses = 0;
       clickMessage = "FAILURE!!"
-      correctGuesses = 1;
-      clickMessage = "Good Luck"
+
 
       for (let i = 0; i < matchcards.length; i++){
         matchcards[i].clicked = false;
@@ -87,32 +86,32 @@ class App extends Component{
 // RENDER
 
   render(){
-
     return(
-      <Wrapper>
-        <div className ="row">
-        <Jumbotron> Clicky Game with Code Images</Jumbotron>
-        </div>
-      <div className ="row">
-      <ScoreBar
-        correctGuesses= {this.state.correctGuesses}
-        topScore = {this.state.topScore}
-      />
-      </div>
+
+      <div className="container-fluid mainContainer">
+      <Jumbotron />
+      <br /> <br />
+      <ScoreBar>
+        Correct Guesses = {this.state.correctGuesses}<br />
+        Top Score = {this.state.topScore}
+        </ScoreBar>
         <div className = "row">
         <h1>{this.state.clickMessage}</h1></div>
-        <div className = "row">
+
+       <div className = "wrapper">
+
         {this.state.matchcards.map(match => (
           <MatchCard
-          clickMessage =  {this.clickMessage}
           setClicked={this.setClicked}
           id={match.id}
           key={match.id}
           image = {match.image}
-          />
+      />
         ))}
-          </div>
-      </Wrapper>
+        </div>
+        </div>
+
+
     )
   }
 }

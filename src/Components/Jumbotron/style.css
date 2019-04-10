@@ -1,0 +1,11 @@
+/*JUMBOTRON*/
+.jumbotron {
+	/* background-image:url("./image/Picture3.png"); */
+    background-blend-mode: lighten;
+    background-repeat: no-repeat;
+	background-position: center;
+	-webkit-background-size: cover;
+	background-size: cover;
+	margin-bottom: 0px;
+    text-align: center;
+}

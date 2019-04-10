@@ -1,8 +1,8 @@
 import React from "react";
 import "./style.css";
 
-function Title(props) {
-  return <h1 className="title">{props.children}</h1>;
-}
+const Jumbotron = ()=>(
+ <div className="jumbotron"><h1>Clicky Game with Code Images</h1></div>
+);
 
-export default Title;
+export default Jumbotron;
