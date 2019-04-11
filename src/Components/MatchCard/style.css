@@ -1,22 +1,36 @@
-.card > .img-container> img {
-	border-radius: 2px;
-	height: 200px;
-	margin: 1rem;
-	position: relative;
-	width: 200px;
-	box-shadow: 0 3px 6px #999, 0 3px 6px #999;
-  }
-
-	.card> .img-container {
-		overflow: hidden;
-		text-align: center;
-		background:black;
-	}
-	.card > .img-container,
-	img {
-		height: 100%;
-		width: 100%;
-	}
-  .card> .img-container:hover {
-		background: green;
-	}
+.card {
+overflow:hidden;
+max-height: 100%;
+max-width: 190px;
+min-height: 180px;
+position: relative;
+display: -ms-flexbox;
+display: flex;
+-ms-flex-direction: column;
+flex-direction: column;
+min-width: 100%;
+word-wrap: break-word;
+box-shadow: 0 0 6px 2px black;
+background-clip: border-box;
+border: 10px solid;
+border-radius: 20px;
+}
+.img-container {
+	vertical-align: middle;
+	max-height: 180px;
+	min-height: 180px;
+	min-width:190px;
+	max-width: 100%;
+	overflow: hidden;
+	border: 2px;
+}
+img {
+	min-width: 100%;
+	max-height: 180px;
+	min-height:180px;
+ 	max-width: 100%;
+	vertical-align: middle;
+}
+#image-card:hover {
+	border: 10px solid #af3d48b4
+}

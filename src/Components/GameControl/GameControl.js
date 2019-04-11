@@ -24,15 +24,17 @@ class GameControl extends React.Component {
 				message: "FAILURE!",
 				score: 0
 			})
-		}
-		else {
+		} else {
 			imageOrder.forEach((image, index) => {
 				if (id === image.id) {
 					imageOrder[index].clicked = true;
 				}
 			});
 
-			const { topScore, score } = this.state;
+			const {
+				topScore,
+				score
+			} = this.state;
 			const newScore = score + 1;
 			const newTopScore = newScore > topScore ? newScore : topScore;
 
@@ -46,29 +48,47 @@ class GameControl extends React.Component {
 	};
 	render() {
 		return (
-			<div className="container-fluid CardContainer">
-			<div className="gameMessage text-center">
-						<p>{this.state.message}</p>
-					</div>
-					<div className="gameScores text-center">
-						<p>Score: {this.state.score} | Top Score: {this.state.topScore}</p>
-					</div>
-				<div className="container">
-
-					<div className="row">
-					{this.state.images.map(image => (
-						<MatchCard
-							key={image.id}
-							id={image.id}
-							clicked={image.clicked}
-							image={image.image}
-							handleClick={this.handleClick}
-							/>
-					))}
-					</div>
-
-				</div>
+			<div className = "CardContainer" >
+			<div className = "row" id = "scoreCard">
+			<div className = "col">
+			<div className = "gameMessage text-center" >
+			 {this.state.message}
 			</div>
+			</div>
+			<div className = "col">
+			<div className = "gameScores text-center" >
+			Score: {this.state.score} | Top Score: {this.state.topScore	}
+			</div>
+			</div>
+			</div>
+			<br />
+			<div className = "container">
+			<div className = "row"> {
+				this.state.images.map(image => (
+					<MatchCard key = {
+						image.id
+					}
+					id = {
+						image.id
+					}
+					clicked = {
+						image.clicked
+					}
+					image = {
+						image.image
+					}
+					handleClick = {
+						this.handleClick
+					}
+					/>
+				))
+			}
+			 </div>
+			 <br /><br />
+			 </div>
+			 <br /> <br /><br />
+
+			 </div>
 		);
 	}
 };
